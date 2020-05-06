@@ -1,25 +1,36 @@
-import java.util.Scanner;
+import java.io.*;
+        import java.util.*;
+        import java.text.*;
+        import java.math.*;
+        import java.util.regex.*;
 
-public class PrimeNo {
-public static void main(String[] args)
+public class  primeNo{
+
+    public static boolean IsPrime(int n){
+        int i=2;
+        if(n==1){
+            return false;
+        }
+        while(i<=n/2){
+            if(n%i==0){
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+Scanner scan = new Scanner(System.in);
+int number=scan.nextInt();
+for (int i=0;i<number;i++)
 {
-    Scanner scan =new Scanner(System.in);
-    int n=scan.nextInt();
-int divisors=0;
-    for(int i=1;i<=n/2;i++){
-        if(n%i==0){
-            divisors++;
-        }}
-        if(divisors==1)
-        {
-            System.out.print("It is a Prime Number");
-        }
-        else{
-            System.out.print("It is not a Prime Number");
-        }
-
-
+    System.out.println(IsPrime(scan.nextInt())?"Prime":"Not Prime");
 
 }
-
+    }
 }
+
+
+
+

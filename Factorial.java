@@ -1,17 +1,20 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+class factorial{
+    public static void main(String[] args)
+    {
+        Scanner sc= new Scanner(System.in);
+        int n=sc.nextInt();
+        int result= factorial(n);
+     System.out.println(result);
+    }
 
-public class Factorial {
-    public static int factorial(int no)
-    {int fact=1;
-        for(int i=1;i<=no;i++)
-        {
-            fact=fact*i;
-        }
-        return fact;
-    }
-    public static void main(String[] args){
-        Scanner scan = new Scanner(System.in);
-        int n=scan.nextInt();
-        System.out.print(factorial(n));
-    }
+    public static int factorial(int n){
+if(n==0)
+{
+    return 1;
 }
+  else {
+    return (n * factorial(n - 1));
+}
+    }}
