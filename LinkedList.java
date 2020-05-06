@@ -1,73 +1,139 @@
-import java.lang.reflect.Method;
-import java.util.Scanner;
+package com.sushma;
 
-class LinkedList {
+import javax.swing.*;
 
-    class Node {
-        int data;
-        Node next = null;
-
-        public Node(int value) {
-            this.data = value;
+public class LinkedList {
+    private class Node{
+        private int _value;
+        private Node next;
+        public  Node(int value){
+            this._value=value;
         }
     }
-
     private Node first;
     private Node last;
     private int size;
 
     public void addLast(int item) {
         var node = new Node(item);
-        if (first == null) {
+
+        if (first==null)
             first = last = node;
-        } else {
+        else {
             last.next = node;
             last = node;
         }
+
         size++;
     }
 
-    public void removeAtLast() {
-        if (first == null) {
+    public void addFirst(int item) {
+        var node = new Node(item);
+
+        if (first==null)
+            first = last = node;
+        else {
+            node.next = first;
+            first = node;
+        }
+
+        size++;
+    }
+
+    //10->20->30->40
+
+    public int indexOf(int item) {
+        int index = 0;
+        var current = first;
+        while (current != null) {
+            if (current._value == item) return index;
+            current = current.next;
+            index++;
+        }
+        return -1;
+    }
+
+    public boolean contains(int item) {
+        return indexOf(item) != -1;
+    }
+
+    public void removeFirst() {
+        if (first==null)
             return;
-        } else {
+
+        if (first == last)
+            first = last = null;
+        else {
+            var second = first.next;
+            first.next = null;
+            first = second;
+        }
+
+        size--;
+    }
+
+    public void removeLast() {
+        if (first==null)
+           return;
+
+        if (first == last)
+            first = last = null;
+        else {
             var previous = getPrevious(last);
             last = previous;
             last.next = null;
-
         }
+
+        size--;
     }
 
     private Node getPrevious(Node node) {
         var current = first;
         while (current != null) {
-            if (current.next == node) {
-                return current;
-            }
+            if (current.next == node) return current;
             current = current.next;
         }
         return null;
     }
 
-    public void removeDuplicates() {
-        var current = first;
-        while (current != null) {
-            var checker = current;
-            if (checker.next == null)
-                return;
-            if (checker.next.data == current.data) {
-                checker.next = checker.next.next;
-            } else {
-                checker = checker.next;
-            }
-            current = current.next;
-        }
+    public int size() {
+        return size;
     }
 
-    public int getKthToLast(int k) {
-        if (first == null) {
-            throw new IllegalStateException();
+    public int[] toArray() {
+        int[] array = new int[size];
+        var current = first;
+        var index = 0;
+        while (current != null) {
+            array[index] = current._value;
+            index=index + 1;
+            current = current.next;
         }
+
+        return array;
+    }
+
+    public void reverse() {
+        if (first==null) return;
+
+        var previous = first;
+        var current = first.next;
+        while (current != null) {
+            var next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
+
+        last = first;
+        last.next = null;
+        first = previous;
+    }
+
+    public int getKthFromTheEnd(int k) {
+        if (first==null)
+            throw new IllegalStateException();
+
         var a = first;
         var b = first;
         for (int i = 0; i < k - 1; i++) {
@@ -79,12 +145,10 @@ class LinkedList {
             a = a.next;
             b = b.next;
         }
-        return a.data;
-
+        return a._value;
     }
-
-    public void removeMiddleNode() {
-        if (first == null)
+    public void printMiddle() {
+        if (first==null)
             throw new IllegalStateException();
 
         var a = first;
@@ -94,94 +158,48 @@ class LinkedList {
             a = a.next;
         }
 
-        if (b == last || b.next == last) {
-            System.out.println(a.data);
-            var previous = getPrevious(a);
-            previous.next = a.next;
+        if (b == last)
+            System.out.println(a._value);
+        else
+            System.out.println(a._value + ", " + a.next._value);
+    }
+    public boolean hasLoop() {
+        var slow = first;
+        var fast = first;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast)
+                return true;
         }
 
+        return false;
     }
+    public static LinkedList createWithLoop() {
+        var list = new LinkedList();
+        list.addLast(10);
+        list.addLast(20);
+        list.addLast(30);
 
-    public boolean isPalindrome(Node first) {
-        Node reversed = reverseLinkedList(first);
-        return isEqual(first, reversed);
+        // Get a reference to 30
+        var node = list.last;
+
+        list.addLast(40);
+        list.addLast(50);
+
+        // Create the loop
+        list.last.next = node;
+
+        return list;
     }
-
-    Node reverseLinkedList(Node OriginalHead) {
-        Node newHead = null;
-        while (OriginalHead != null) {
-            Node newNode = new Node(OriginalHead.data);
-            newNode.next = newHead;
-            newHead = newNode;
-            OriginalHead = OriginalHead.next;
+    public void print(){
+        var currentNode = first;
+        while (currentNode.next !=null) {
+        System.out.println(currentNode._value);
+        currentNode = currentNode.next;
         }
-        return newHead;
-    }
-
-    boolean isEqual(Node one, Node two) {
-        while (one != null && two != null) {
-            if (one.data != two.data) {
-                return false;
-            }
-            one = one.next;
-            two = two.next;
-        }
-        return one == null && two == null;
-    }
-
-
-    public void print() {
-
-//        Example Static Method
-//        String[] empty = {" "," "};
-//        LinkedList.main(empty);
-
-//        Example Instance Method
-//        LinkedList list = new LinkedList();
-//        list.isPalindrome(first);
-
-        var current = first;
-        while (current != null) {
-            System.out.print(current.data + " ");
-            current = current.next;
         }
     }
 
-    public static void main(String[] args) {
-        LinkedList myList = new LinkedList();
-        myList.addLast(10);
-        myList.addLast(20);
-        myList.addLast(30);
-        myList.addLast(20);
-        myList.addLast(10);
-        /*myList.addLast(40);
-        myList.addLast(40);
-        myList.addLast(50);
-        myList.addLast(60);
-        myList.addLast(70);
-
-        System.out.println("Input:");
-        myList.print();
-        System.out.println();
-        System.out.println("After Remove Last:");
-        myList.removeAtLast();
-        myList.print();
-        System.out.println();
-        myList.removeDuplicates();
-        System.out.println("After Removing Duplicates:");
-        myList.print();
-        System.out.println();
-        System.out.println("Getting Kth Node from the end:");
-        var result = myList.getKthToLast(2);
-        System.out.println(result);
-        System.out.println();
-        System.out.println("Removing Middle Element");
-        myList.removeMiddleNode();
-        myList.print();*/
-        var result= myList.isPalindrome(myList.first);
-        System.out.println("Given list is a Palindrome? " );
-        System.out.print(result);
-
-    }
-
-}
