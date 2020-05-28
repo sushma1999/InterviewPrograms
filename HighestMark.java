@@ -2,27 +2,40 @@ import java.util.Scanner;
 
 public class HighestMark {
 
-public static int FindHighestMark(int[] input){
-    int max=0;
-    for (var mark:input) {
-        if(mark>max){
-             max=mark;
+    public static void main(String[] args)
+    {
+        Scanner scanner=new Scanner(System.in);
+
+
+        int n= scanner.nextInt();
+        int[] myArray = new int[n];
+        int i;
+        for(i=0;i<n;i++)
+        {
+            myArray[i]= scanner.nextInt();
         }
 
+        int result=FindHighest(n,myArray);
+System.out.println(result);
     }
-    return max;
-}
 
-
-
-public static void main(String[] args) {
-    Scanner scan = new Scanner(System.in);
-    int a = scan.nextInt();
-    int[] marks=new int[a];
-    for(int i=0;i<a;i++)
+    public static int FindHighest(int n,int[] myArray)
     {
-         marks[i]=scan.nextInt();
+
+        //n=5
+        // 50 36 44 11 39
+        // 0  1  2  3  4
+        int max =0;
+        for ( int value : myArray) {
+
+            if(value>max)
+            {
+                max=value;
+            }
+
+        }
+        return max;
+
+
     }
-    System.out.println(FindHighestMark(marks));
-}
 }
