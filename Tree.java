@@ -332,8 +332,11 @@ public class Tree {
         tree.insert(1);
         tree.insert(6);
         tree.insert(8);
+        tree.insert(11);
+        tree.insert(15);
+        tree.insert(14);
         tree.insert(10);
-
+        tree.insert(20);
 
 //        Tree tree2 = new Tree();
 //        tree2.insert(7);
@@ -352,20 +355,20 @@ public class Tree {
 //        tree.traversePreOrder();
 
 //
-//        var result = tree.getNodesAtDistance(1);
-//        for (var item : result) {
-//            System.out.println(item);
-//        }
-//
-//        System.out.println();
+        var result = tree.getNodesAtDistance(3);
+        for (var item : result) {
+            System.out.println(item);
+        }
+
+        System.out.println();
 //tree.traverseLevelOrder();
 
-        System.out.println(tree.size());
-        System.out.println(tree.countLeaves());
-        System.out.println(tree.max());
-        System.out.println(tree.contains(10));
-        System.out.println(tree.areSibling(10,8));
-        System.out.println(tree.getAncestors(10));
+//        System.out.println(tree.size());
+//        System.out.println(tree.countLeaves());
+//        System.out.println(tree.max());
+//        System.out.println(tree.contains(10));
+//        System.out.println(tree.areSibling(10,8));
+//        System.out.println(tree.getAncestors(10));
     }
 
 
